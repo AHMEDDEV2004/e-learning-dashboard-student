@@ -9,7 +9,7 @@ interface CourseProgressProps {
   progress: number
   lessons: string
   timeLeft: string
-  color: "orange" | "blue" | "green"
+  color: "orange" | "blue" | "green" | "purple"
 }
 
 export function CourseProgress({
@@ -19,10 +19,25 @@ export function CourseProgress({
   progress,
   lessons,
   timeLeft,
-  color = "orange",
+  color = "purple",
 }: CourseProgressProps) {
+  const getColorClass = () => {
+    switch (color) {
+      case "orange":
+        return "text-orange-500"
+      case "blue":
+        return "text-blue-500"
+      case "green":
+        return "text-green-500"
+      case "purple":
+        return "text-[#2d0778]"
+      default:
+        return "text-[#2d0778]"
+    }
+  }
+
   return (
-    <div className="rounded-lg border bg-white p-4">
+    <div className="rounded-lg border bg-white p-4 hover:border-[#bee543] transition-colors">
       <div className="mb-3 flex items-start justify-between">
         <div className="flex items-start gap-3">
           {icon}
@@ -32,7 +47,11 @@ export function CourseProgress({
           </div>
         </div>
       </div>
-      <Progress value={progress} className="mb-3 h-2 bg-gray-100" />
+      <Progress 
+        value={progress} 
+        className="mb-3 h-2 bg-gray-100" 
+        indicatorClassName="bg-[#2d0778]" 
+      />
       <div className="flex items-center justify-between text-sm text-gray-500">
         <div className="flex items-center gap-1">
           <svg
@@ -71,7 +90,10 @@ export function CourseProgress({
           <span>{timeLeft}</span>
         </div>
       </div>
-      <Button variant="ghost" className="mt-3 w-full text-orange-500">
+      <Button 
+        variant="ghost" 
+        className={`mt-3 w-full ${getColorClass()} hover:bg-[#bee543]/20 hover:text-[#2d0778]`}
+      >
         Resume Course
         <svg
           xmlns="http://www.w3.org/2000/svg"

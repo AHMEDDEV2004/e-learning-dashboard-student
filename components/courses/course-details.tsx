@@ -244,89 +244,88 @@ export function CourseDetails({ id }: CourseDetailsProps) {
                               className={`h-4 w-4 ${i < 5 ? "fill-orange-500 text-orange-500" : "text-gray-300"}`}
                             />
                           ))}
-                        </div>
                       </div>
-                      <p className="mt-2">
-                        This course exceeded my expectations! The instructor explains complex concepts in a way that's easy to understand, and the projects are practical and engaging. Highly recommend!
-                      </p>
                     </div>
-                    <div className="rounded-lg bg-gray-50 p-4">
-                      <div className="mb-2 flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <div className="h-10 w-10 rounded-full bg-gray-300"></div>
-                          <div>
-                            <div className="font-medium">John D.</div>
-                            <div className="text-xs text-gray-500">1 month ago</div>
-                          </div>
-                        </div>
-                        <div className="flex">
-                          {Array(5)
-                            .fill(0)
-                            .map((_, i) => (
-                              <Star
-                                key={i}
-                                className={`h-4 w-4 ${i < 4 ? "fill-orange-500 text-orange-500" : "text-gray-300"}`}
-                              />
-                            ))}
-                        </div>
-                      </div>
-                      <p className="mt-2">
-                        Great course with lots of practical examples. The instructor is knowledgeable and responsive to questions. I've learned a lot and feel confident applying these skills to my own projects.
-                      </p>
-                    </div>
+                    <p className="mt-2">
+                      This course exceeded my expectations! The instructor explains complex concepts in a way that's easy to understand, and the projects are practical and engaging. Highly recommend!
+                    </p>
                   </div>
-                </TabsContent>
-              </Tabs>
-            </div>
+                  <div className="rounded-lg bg-gray-50 p-4">
+                    <div className="mb-2 flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <div className="h-10 w-10 rounded-full bg-gray-300"></div>
+                        <div>
+                          <div className="font-medium">John D.</div>
+                          <div className="text-xs text-gray-500">1 month ago</div>
+                        </div>
+                      </div>
+                      <div className="flex">
+                        {Array(5)
+                          .fill(0)
+                          .map((_, i) => (
+                            <Star
+                              key={i}
+                              className={`h-4 w-4 ${i < 4 ? "fill-orange-500 text-orange-500" : "text-gray-300"}`}
+                            />
+                          ))}
+                      </div>
+                    </div>
+                    <p className="mt-2">
+                      Great course with lots of practical examples. The instructor is knowledgeable and responsive to questions. I've learned a lot and feel confident applying these skills to my own projects.
+                    </p>
+                  </div>
+                </div>
+              </TabsContent>
+            </Tabs>
+          </div>
 
-            {/* Sidebar */}
-            <div className="md:col-span-1">
-              <div className="sticky top-6 rounded-lg border bg-white p-6 shadow-sm">
-                <div className="mb-4 text-center">
-                  <div className="mb-2 text-3xl font-bold">{course.price}</div>
+          {/* Sidebar */}
+          <div className="md:col-span-1">
+            <div className="sticky top-6 rounded-lg border bg-white p-6 shadow-sm">
+              <div className="mb-4 text-center">
+                <div className="mb-2 text-3xl font-bold">{course.price}</div>
+              </div>
+              <div className="space-y-3">
+                <Button size="lg" className="w-full bg-[#bee543] hover:bg-[#aed234] text-[#2d0778] font-medium">
+                  Enroll Now
+                </Button>
+                <Button size="lg" variant="outline" className="w-full hover:text-[#2d0778] hover:border-[#bee543]">
+                  Add to Cart
+                </Button>
+              </div>
+              <div className="mt-6 space-y-4 text-sm">
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-500">Duration</span>
+                  <span className="font-medium">{course.duration}</span>
                 </div>
-                <div className="space-y-3">
-                  <Button size="lg" className="w-full bg-[#bee543] hover:bg-[#aed234] text-[#2d0778] font-medium">
-                    Enroll Now
-                  </Button>
-                  <Button size="lg" variant="outline" className="w-full hover:text-[#2d0778] hover:border-[#bee543]">
-                    Add to Cart
-                  </Button>
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-500">Lessons</span>
+                  <span className="font-medium">
+                    {course.curriculum.reduce((acc, section) => acc + section.lessons.length, 0)}
+                  </span>
                 </div>
-                <div className="mt-6 space-y-4 text-sm">
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-500">Duration</span>
-                    <span className="font-medium">{course.duration}</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-500">Lessons</span>
-                    <span className="font-medium">
-                      {course.curriculum.reduce((acc, section) => acc + section.lessons.length, 0)}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-500">Level</span>
-                    <span className="font-medium">{course.level}</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-500">Language</span>
-                    <span className="font-medium">{course.language}</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-500">Certificate</span>
-                    <span className="font-medium">Yes</span>
-                  </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-500">Level</span>
+                  <span className="font-medium">{course.level}</span>
                 </div>
-                <div className="mt-6 rounded-lg bg-orange-50 p-4 text-center">
-                  <p className="text-sm text-orange-800">
-                    30-Day Money-Back Guarantee
-                  </p>
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-500">Language</span>
+                  <span className="font-medium">{course.language}</span>
                 </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-500">Certificate</span>
+                  <span className="font-medium">Yes</span>
+                </div>
+              </div>
+              <div className="mt-6 rounded-lg bg-orange-50 p-4 text-center">
+                <p className="text-sm text-orange-800">
+                  30-Day Money-Back Guarantee
+                </p>
               </div>
             </div>
           </div>
         </div>
       </div>
-  </div>
+    </div>
   )
 }

@@ -1,162 +1,140 @@
 "use client"
 
-import { useState } from "react"
-import { Bell, Search } from "lucide-react"
-import Image from "next/image"
+import { useState, useEffect } from "react"
+import { Bell, ChevronRight, Menu, User, X } from "lucide-react"
+import { usePathname } from "next/navigation"
 
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
 import { Sidebar } from "@/components/sidebar"
 import { UserProfile } from "@/components/user-profile"
-import { WeeklyStreak } from "@/components/weekly-streak"
-import { WeeklyWatchTime } from "@/components/weekly-watch-time"
-import { CourseCard } from "@/components/course-card"
-import { CourseProgress } from "@/components/course-progress"
+import { cn } from "@/lib/utils"
 
-export function DashboardPage() {
-  const [searchQuery, setSearchQuery] = useState("")
+interface DashboardPageProps {
+  children: React.ReactNode
+}
+
+export function DashboardPage({ children }: DashboardPageProps) {
+  const [sidebarOpen, setSidebarOpen] = useState(true)
+  const [profileOpen, setProfileOpen] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+  const pathname = usePathname()
+  
+  const isMessagesPage = pathname === "/messages"
+  const isLeaderboardPage = pathname === "/leaderboard"
+  const isClassesPage = pathname.startsWith("/my-classes")
+  const isExplorePage = pathname === "/explore"
+  const isMyCoursesPage = pathname === "/my-courses"
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth < 768)
+      if (window.innerWidth < 768) {
+        setSidebarOpen(false)
+      } else {
+        setSidebarOpen(true)
+      }
+    }
+
+    checkScreenSize()
+    window.addEventListener('resize', checkScreenSize)
+    
+    return () => {
+      window.removeEventListener('resize', checkScreenSize)
+    }
+  }, [])
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen)
+  }
+
+  const toggleProfile = () => {
+    setProfileOpen(!profileOpen)
+  }
+
+  // Helper to get the page title based on pathname
+  const getPageTitle = () => {
+    if (isMessagesPage) return "Messages"
+    if (isLeaderboardPage) return "Leaderboard"
+    if (isClassesPage) return "My Classes"
+    if (isExplorePage) return "Explore"
+    if (isMyCoursesPage) return "My Courses"
+    return "Dashboard"
+  }
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
-      <Sidebar />
-      <main className="flex-1">
-        <div className="flex items-center justify-between border-b bg-white p-4">
-          <h1 className="text-xl font-semibold">Dashboard</h1>
-          <div className="flex items-center gap-4">
-            <div className="relative">
-              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
-              <Input
-                type="search"
-                placeholder="Search here..."
-                className="w-64 pl-8"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              <span className="absolute right-2.5 top-2.5 text-xs text-gray-500">⌘K</span>
-            </div>
-            <Button variant="ghost" size="icon" className="relative">
-              <Bell className="h-5 w-5" />
-              <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-red-500"></span>
+    <div className="flex h-screen overflow-hidden bg-gray-50">
+      {/* Backdrop for mobile when sidebar or profile is open */}
+      {isMobile && (sidebarOpen || profileOpen) && (
+        <div 
+          className="fixed inset-0 z-30 bg-black/50 transition-opacity"
+          onClick={() => {
+            setSidebarOpen(false)
+            setProfileOpen(false)
+          }}
+        />
+      )}
+
+      {/* Sidebar */}
+      <div 
+        className={cn(
+          "fixed z-40 h-full transition-all duration-300 ease-in-out md:relative",
+          sidebarOpen ? "left-0" : "-left-full md:-left-20",
+          sidebarOpen ? (isMobile ? "w-64" : "w-64") : "w-20"
+        )}
+      >
+        <Sidebar collapsed={!sidebarOpen} />
+      </div>
+
+      {/* Main Content */}
+      <div className="flex flex-1 flex-col overflow-hidden">
+        {/* Header */}
+        <header className="flex h-16 items-center justify-between border-b bg-white px-4">
+          <div className="flex items-center">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={toggleSidebar}
+              className="mr-2 h-9 w-9 rounded-full hover:bg-[#bee543]/20"
+            >
+              {sidebarOpen ? <ChevronRight className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
-            <Image
-              src="/placeholder.svg?height=40&width=40"
-              alt="User avatar"
-              width={40}
-              height={40}
-              className="rounded-full"
-            />
+            <h1 className="text-xl font-bold text-[#2d0778]">
+              {getPageTitle()}
+            </h1>
           </div>
-        </div>
-
-        <div className="flex flex-col lg:flex-row">
-          <div className="flex-1 p-6">
-            <section className="mb-8">
-              <h2 className="mb-4 text-2xl font-bold">Continue Learning</h2>
-              <div className="grid gap-4 md:grid-cols-2">
-                <CourseProgress
-                  icon={<div className="h-8 w-8 rounded bg-orange-100 p-1.5 text-orange-500">🎨</div>}
-                  title="Advance UI/UX Design"
-                  category="DESIGN"
-                  progress={45}
-                  lessons="18/40 Lessons"
-                  timeLeft="2 hours left"
-                  color="orange"
-                />
-                <CourseProgress
-                  icon={<div className="h-8 w-8 rounded bg-orange-100 p-1.5 text-orange-500">🌐</div>}
-                  title="Basic Web Development"
-                  category="DEVELOPMENT"
-                  progress={45}
-                  lessons="18/40 Lessons"
-                  timeLeft="2 hours left"
-                  color="orange"
-                />
-              </div>
-            </section>
-
-            <section>
-              <h2 className="mb-4 text-2xl font-bold">Recommended Courses For You</h2>
-              <div className="grid gap-6 md:grid-cols-2">
-                <CourseCard
-                  isNew
-                  thumbnail="/placeholder.svg?height=200&width=350"
-                  title="Webflow Tutorial: Build Your First Portfolio Website In a Minute"
-                  instructor="Adam Smith"
-                  rating={4.7}
-                  reviews={32}
-                  price="$12.99"
-                  duration="3:50"
-                  totalDuration="9:32"
-                />
-                <CourseCard
-                  thumbnail="/placeholder.svg?height=200&width=350"
-                  title="Basic To Advance Design System With UX Strategies"
-                  instructor="Scott Warden"
-                  rating={4.7}
-                  reviews={540}
-                  price="$49.99"
-                  duration="3:50"
-                  totalDuration="9:32"
-                />
-                <CourseCard
-                  thumbnail="/placeholder.svg?height=200&width=350"
-                  title="Advanced Frontend Development Techniques"
-                  instructor="Jane Cooper"
-                  rating={4.9}
-                  reviews={128}
-                  price="$39.99"
-                  duration="4:20"
-                  totalDuration="12:45"
-                />
-                <CourseCard
-                  thumbnail="/placeholder.svg?height=200&width=350"
-                  title="Mastering React and Next.js for Modern Web Apps"
-                  instructor="Michael Johnson"
-                  rating={4.8}
-                  reviews={215}
-                  price="$59.99"
-                  duration="5:15"
-                  totalDuration="15:30"
-                />
-              </div>
-            </section>
+          <div className="flex items-center gap-2">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="h-9 w-9 rounded-full hover:bg-[#bee543]/20"
+            >
+              <Bell className="h-5 w-5" />
+              <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-[#2d0778] text-[10px] text-white">
+                3
+              </span>
+            </Button>
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="h-9 w-9 rounded-full hover:bg-[#bee543]/20"
+              onClick={toggleProfile}
+            >
+              <User className="h-5 w-5" />
+            </Button>
           </div>
+        </header>
 
-          <div className="w-full border-l lg:w-80 xl:w-96">
-            <div className="p-4">
-              <div className="mb-4 flex items-center justify-between">
-                <Button variant="ghost" size="sm" className="text-orange-500">
-                  Close Details
-                </Button>
-              </div>
-              <UserProfile />
-              <WeeklyStreak />
-              <div className="mt-6 grid grid-cols-2 gap-4">
-                <Card>
-                  <CardContent className="p-4 text-center">
-                    <div className="flex flex-col items-center">
-                      <div className="mb-2 text-orange-500">📚</div>
-                      <h3 className="text-xl font-bold">3 Courses</h3>
-                      <p className="text-sm text-gray-500">In Progress</p>
-                    </div>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardContent className="p-4 text-center">
-                    <div className="flex flex-col items-center">
-                      <div className="mb-2 text-orange-500">✅</div>
-                      <h3 className="text-xl font-bold">17 Courses</h3>
-                      <p className="text-sm text-gray-500">Completed</p>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-              <WeeklyWatchTime />
-            </div>
-          </div>
-        </div>
-      </main>
+        {/* Main Content Area */}
+        <main className={cn(
+          "flex-1", 
+          isMessagesPage ? "p-0 overflow-hidden" : "p-4 md:p-6 overflow-auto"
+        )}>
+          {children}
+        </main>
+      </div>
+
+      {/* User Profile Sidebar */}
+      <UserProfile isOpen={profileOpen} onClose={() => setProfileOpen(false)} />
     </div>
   )
 }

@@ -1,10 +1,10 @@
-import { DashboardLayout } from "@/components/layout/dashboard-layout"
+import { DashboardPage } from "@/components/dashboard-page"
 import { QuizzesList } from "@/components/quizzes/quizzes-list"
 
 export default function QuizzesPage() {
   return (
-    <DashboardLayout>
+    <DashboardPage>
       <QuizzesList />
-    </DashboardLayout>
+    </DashboardPage>
   )
 }

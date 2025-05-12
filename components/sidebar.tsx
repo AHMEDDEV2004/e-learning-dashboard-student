@@ -40,14 +40,14 @@ export function Sidebar({ collapsed = false }: SidebarProps) {
         </Link>
       </div>
       <div className="flex flex-1 flex-col overflow-hidden">
-        {!collapsed && <div className="mt-4 px-3 text-sm font-medium text-gray-500">MENU</div>}
+      {!collapsed && <div className="mt-4 px-3 text-sm font-medium text-gray-500">MENU</div>}
         <nav className={`mt-2 flex-col space-y-1 ${collapsed ? 'px-2' : 'px-3'} flex-1 overflow-y-auto scrollbar-hide`}>
           <Link href="/" className={`flex items-center ${collapsed ? 'justify-center' : 'gap-3'} rounded-md ${
             pathname === "/" ? "bg-[#2d0778]/10 text-[#2d0778]" : "text-gray-700 hover:bg-[#bee543]/10 hover:text-[#2d0778]"
           } px-3 py-2`}>
-            <Home className="h-5 w-5" />
-            {!collapsed && <span>Overview</span>}
-          </Link>
+          <Home className="h-5 w-5" />
+          {!collapsed && <span>Overview</span>}
+        </Link>
           
           <Link href="/explore" className={`flex items-center ${collapsed ? 'justify-center' : 'gap-3'} rounded-md ${
             pathname === "/explore" ? "bg-[#2d0778]/10 text-[#2d0778]" : "text-gray-700 hover:bg-[#bee543]/10 hover:text-[#2d0778]"
@@ -63,10 +63,12 @@ export function Sidebar({ collapsed = false }: SidebarProps) {
             {!collapsed && <span>My Courses</span>}
           </Link>
           
-          <Link href="#" className={`flex items-center ${collapsed ? 'justify-center' : 'gap-3'} rounded-md px-3 py-2 text-gray-700 hover:bg-[#bee543]/10 hover:text-[#2d0778]`}>
-            <BookOpen className="h-5 w-5" />
-            {!collapsed && <span>Lessons</span>}
-          </Link>
+        <Link href="/lessons" className={`flex items-center ${collapsed ? 'justify-center' : 'gap-3'} rounded-md ${
+            pathname === "/lessons" ? "bg-[#2d0778]/10 text-[#2d0778]" : "text-gray-700 hover:bg-[#bee543]/10 hover:text-[#2d0778]"
+          } px-3 py-2`}>
+          <BookOpen className="h-5 w-5" />
+          {!collapsed && <span>Lessons</span>}
+        </Link>
 
           {/* My Class Section */}
           {!collapsed && <div className="mt-6 px-3 text-sm font-medium text-gray-500">MY CLASSES</div>}
@@ -138,47 +140,47 @@ export function Sidebar({ collapsed = false }: SidebarProps) {
           <Link href="/quizzes" className={`flex items-center ${collapsed ? 'justify-center' : 'gap-3'} rounded-md ${
             pathname.startsWith("/quizzes") ? "bg-[#2d0778]/10 text-[#2d0778]" : "text-gray-700 hover:bg-[#bee543]/10 hover:text-[#2d0778]"
           } px-3 py-2`}>
-            <CheckSquare className="h-5 w-5" />
-            {!collapsed && <span>Quizzes</span>}
-          </Link>
+          <CheckSquare className="h-5 w-5" />
+          {!collapsed && <span>Quizzes</span>}
+        </Link>
           <Link href="/leaderboard" className={`flex items-center ${collapsed ? 'justify-center' : 'gap-3'} rounded-md ${
             pathname === "/leaderboard" ? "bg-[#2d0778]/10 text-[#2d0778]" : "text-gray-700 hover:bg-[#bee543]/10 hover:text-[#2d0778]"
           } px-3 py-2`}>
-            <Trophy className="h-5 w-5" />
-            {!collapsed && <span>Leaderboard</span>}
-          </Link>
-          <Link href="#" className={`flex items-center ${collapsed ? 'justify-center' : 'gap-3'} rounded-md px-3 py-2 text-gray-700 hover:bg-[#bee543]/10 hover:text-[#2d0778]`}>
-            <BarChart2 className="h-5 w-5" />
-            {!collapsed && <span>Skill Graph</span>}
-          </Link>
+          <Trophy className="h-5 w-5" />
+          {!collapsed && <span>Leaderboard</span>}
+        </Link>
+        <Link href="#" className={`flex items-center ${collapsed ? 'justify-center' : 'gap-3'} rounded-md px-3 py-2 text-gray-700 hover:bg-[#bee543]/10 hover:text-[#2d0778]`}>
+          <BarChart2 className="h-5 w-5" />
+          {!collapsed && <span>Skill Graph</span>}
+        </Link>
           <Link href="/courses" className={`flex items-center ${collapsed ? 'justify-center' : 'gap-3'} rounded-md ${
             pathname.startsWith("/courses") ? "bg-[#2d0778]/10 text-[#2d0778]" : "text-gray-700 hover:bg-[#bee543]/10 hover:text-[#2d0778]"
           } px-3 py-2`}>
-            <FileText className="h-5 w-5" />
-            {!collapsed && <span>Courses</span>}
-          </Link>
+          <FileText className="h-5 w-5" />
+          {!collapsed && <span>Courses</span>}
+        </Link>
          
           <Link href="/messages" className={`flex items-center ${collapsed ? 'justify-center' : 'gap-3'} rounded-md ${
             pathname === "/messages" ? "bg-[#2d0778]/10 text-[#2d0778]" : "text-gray-700 hover:bg-[#bee543]/10 hover:text-[#2d0778]"
           } px-3 py-2`}>
-            <MessageSquare className="h-5 w-5" />
-            {!collapsed && (
-              <>
-                <span>Messages</span>
-                <span className="ml-auto flex h-5 w-5 items-center justify-center rounded-full bg-[#2d0778] text-xs text-white">
-                  5
-                </span>
-              </>
-            )}
-            {collapsed && (
-              <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-[#2d0778]"></span>
-            )}
-          </Link>
-          <Link href="#" className={`flex items-center ${collapsed ? 'justify-center' : 'gap-3'} rounded-md px-3 py-2 text-gray-700 hover:bg-[#bee543]/10 hover:text-[#2d0778]`}>
-            <Settings className="h-5 w-5" />
-            {!collapsed && <span>Settings</span>}
-          </Link>
-        </nav>
+          <MessageSquare className="h-5 w-5" />
+          {!collapsed && (
+            <>
+              <span>Messages</span>
+              <span className="ml-auto flex h-5 w-5 items-center justify-center rounded-full bg-[#2d0778] text-xs text-white">
+                5
+              </span>
+            </>
+          )}
+          {collapsed && (
+            <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-[#2d0778]"></span>
+          )}
+        </Link>
+        <Link href="#" className={`flex items-center ${collapsed ? 'justify-center' : 'gap-3'} rounded-md px-3 py-2 text-gray-700 hover:bg-[#bee543]/10 hover:text-[#2d0778]`}>
+          <Settings className="h-5 w-5" />
+          {!collapsed && <span>Settings</span>}
+        </Link>
+      </nav>
       </div>
       {!collapsed && (
         <div className="p-4 border-t mt-auto">
